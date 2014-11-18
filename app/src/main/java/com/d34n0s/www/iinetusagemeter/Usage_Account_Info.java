@@ -8,6 +8,9 @@ public class Usage_Account_Info {
     public String days_so_far;
     public String anniversary;
     public String days_remaining;
-    public String on_since_utc_timestamp;
-    
+    public String ip;
+    public String on_since;
+    public String plan;
+    public String product;
+
 }

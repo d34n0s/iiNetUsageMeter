@@ -24,8 +24,163 @@
 
     </ScrollView>-->
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:text="Account Information"
+        android:background="@android:color/holo_orange_light"/>
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <TableRow>
+
+
+        <TextView
+            android:layout_weight="25"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Plan"
+            />
+
+            <TextView
+                android:layout_weight="25"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Product" />
+
+            </TableRow>
+
+
+
+        <TableRow>
+
+
+            <TextView
+                android:layout_weight="25"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text=""
+                android:id="@+id/tv_usage_plan" />
+
+            <TextView
+                android:layout_weight="25"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text=""
+                android:id="@+id/tv_usage_product" />
+
+            </TableRow>
+
+        <TableRow
+            android:layout_marginTop="20sp">
+
+                <TextView
+                    android:layout_weight="25"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="IP"
+                    />
+
+                <TextView
+                    android:layout_weight="25"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="On Since" />
+            </TableRow>
+
+            <TableRow>
+            <TextView
+                android:layout_weight="25"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text=""
+                android:id="@+id/tv_usage_ip" />
+
+            <TextView
+                android:layout_weight="25"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text=""
+                android:id="@+id/tv_usage_onSince" />
+
+        </TableRow>
+
+        <TableRow android:weightSum="100">
+
+            <TextView />
+
+        </TableRow>
+
+        <TableRow android:weightSum="90">
+
+
+            <TextView
+                android:layout_weight="30"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Days Gone"
+                />
+
+            <TextView
+                android:layout_weight="30"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Days Remaining"/>
+
+            <TextView
+                android:layout_weight="30"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Anniverary" />
+
+
+        </TableRow>
+
+        <TableRow android:weightSum="90">
+
+
+            <TextView
+                android:layout_weight="30"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text=""
+                android:id="@+id/tv_usage_daysGone"
+                />
+
+            <TextView
+                android:layout_weight="30"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text=""
+                android:id="@+id/tv_usage_daysRemaining" />
+
+
+            <TextView
+                android:layout_weight="30"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text=""
+                android:id="@+id/tv_usage_anniversary" />
+        </TableRow>
+
+        </TableLayout>
+
     <LinearLayout
         android:orientation="horizontal"
+        android:layout_marginTop="20sp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_orange_light"

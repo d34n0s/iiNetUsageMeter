@@ -25,8 +25,20 @@ import static com.d34n0s.www.iinetusagemeter.HttpURLConnectionClient.getData;
  */
 public class Usage extends Activity implements View.OnClickListener{
 
-    TextView tv_usage_json;
+    //account info
+    TextView tv_usage_plan;
+    TextView tv_usage_product;
+    TextView tv_usage_ip;
+    TextView tv_usage_onSince;
+    TextView tv_usage_daysGone;
+    TextView tv_usage_daysRemaining;
+    TextView tv_usage_anniversary;
+
+    //enable to display raw data
+    //TextView tv_usage_json;
     //TextView tv_usage_url;
+
+    //list of traffic usage
     ListView lv_usage_traffic;
     ProgressDialog progressDialog;
     String urlComplete;
@@ -53,6 +65,13 @@ public class Usage extends Activity implements View.OnClickListener{
         //tv_usage_json = (TextView) findViewById(R.id.tv_usage_json);
         //tv_usage_url = (TextView) findViewById(R.id.tv_usage_url);
         lv_usage_traffic = (ListView) findViewById(R.id.lv_usage_traffic);
+        tv_usage_plan = (TextView) findViewById(R.id.tv_usage_plan);
+        tv_usage_product = (TextView) findViewById(R.id.tv_usage_product);
+        tv_usage_ip = (TextView) findViewById(R.id.tv_usage_ip);
+        tv_usage_onSince = (TextView) findViewById(R.id.tv_usage_onSince);
+        tv_usage_daysGone = (TextView) findViewById(R.id.tv_usage_daysGone);
+        tv_usage_daysRemaining = (TextView) findViewById(R.id.tv_usage_daysRemaining);
+        tv_usage_anniversary = (TextView) findViewById(R.id.tv_usage_anniversary);
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
@@ -105,7 +124,30 @@ public class Usage extends Activity implements View.OnClickListener{
                     i++;
                 }
 
+                //set account info into object
+                Usage_Account_Info acc = new Usage_Account_Info();
+                JSONArray connectionsArray = response.getJSONArray("connections");
+                JSONObject connections = connectionsArray.getJSONObject(0);
+                acc.ip = connections.getString("ip");
+                acc.on_since =  connections.getString("on_since");
 
+                JSONObject account_info = response.getJSONObject("account_info");
+                acc.plan = account_info.getString("plan");
+                acc.product = account_info.getString("product");
+
+                JSONObject quota_reset = response.getJSONObject("quota_reset");
+                acc.days_so_far = quota_reset.getString("days_so_far");
+                acc.anniversary = quota_reset.getString("anniversary");
+                acc.days_remaining = quota_reset.getString("days_remaining");
+
+
+                tv_usage_plan.setText(acc.plan);
+                tv_usage_product.setText(acc.product);
+                tv_usage_ip.setText(acc.ip);
+                tv_usage_onSince.setText(acc.on_since);
+                tv_usage_daysGone.setText(acc.days_so_far);
+                tv_usage_daysRemaining.setText(acc.days_remaining);
+                tv_usage_anniversary.setText(acc.anniversary);
                 //tv_usage_url.setText(urlComplete);
 
 
@@ -173,9 +215,9 @@ public class Usage extends Activity implements View.OnClickListener{
         String populateFrom(Usage_Traffic ut) {
             //set the basic data on each element
             tv_usage_name.setText(ut.name);
-            tv_usage_data.setText(String.format("%.2f",ut.getUsedMB()));
-            tv_usage_allocation.setText(String.format("%.2f",ut.getAllocationdMB()));
-            tv_usage_remaining.setText(String.format("%.2f",ut.getRemaining()));
+            tv_usage_data.setText(String.format("%.2f", ut.getUsedMB()));
+            tv_usage_allocation.setText(String.format("%.2f", ut.getAllocationdMB()));
+            tv_usage_remaining.setText(String.format("%.2f", ut.getRemaining()));
 
 
             return null;
