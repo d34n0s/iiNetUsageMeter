@@ -52,7 +52,7 @@ public class Usage extends Activity implements View.OnClickListener{
     int sWidth;
     int sHeight;
     int pixelsPerPercent;
-    int percentageDaysUsed;
+    Double percentageDaysUsed;
 
     //this is the array to hold our class data
     ArrayList<Usage_Traffic> arrayOfWebData = new ArrayList<Usage_Traffic>();
@@ -166,7 +166,7 @@ public class Usage extends Activity implements View.OnClickListener{
                 acc.anniversary = quota_reset.getString("anniversary");
                 acc.days_remaining = quota_reset.getString("days_remaining");
 
-                percentageDaysUsed = acc.getPercentageDaysUsed() * pixelsPerPercent;
+                percentageDaysUsed = acc.getPercentageDaysUsed();
 
                 tv_usage_plan.setText(acc.plan);
                 tv_usage_product.setText(acc.product);
@@ -254,12 +254,12 @@ public class Usage extends Activity implements View.OnClickListener{
             tv_usage_allocation.setText(String.format("%.2f", ut.getAllocationdMB()));
             tv_usage_remaining.setText(String.format("%.2f", ut.getRemaining()));
             tv_usage_percentDataUsed.setText("Data Used: " + ut.getPercentDataUsed().toString() + "%");
-            tv_usage_percentDaysUsed.setText("Days Used: " + String.valueOf(percentageDaysUsed) + "%");
+            tv_usage_percentDaysUsed.setText("Days Used: " + String.format("%.0f", percentageDaysUsed) + "%");
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ut.getPercentDataUsed() * pixelsPerPercent, 5);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ut.getPercentDataUsed() * pixelsPerPercent, 40);
             iv_usage_percentDataBar.setLayoutParams(layoutParams);
 
-            LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(percentageDaysUsed * pixelsPerPercent, 5);
+            LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams((int) (percentageDaysUsed * pixelsPerPercent), 40);
             iv_usage_percentDaysBar.setLayoutParams(layoutParams1);
 
             //tv_usage_percentDaysUsed.getLayoutParams().width =(percentageDaysUsed);

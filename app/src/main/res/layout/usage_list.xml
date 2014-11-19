@@ -104,8 +104,9 @@
                 <ImageView
                     android:id="@+id/iv_usage_percentDataBar"
                     android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
                     android:layout_width="100sp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20sp"
                     android:src="@drawable/progressbar_data"/>
         </LinearLayout>
                 <TextView
@@ -138,8 +139,9 @@
                 <ImageView
                     android:id="@+id/iv_usage_percentDaysBar"
                     android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
                     android:layout_width="100sp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20sp"
                     android:src="@drawable/progressbar_days"/>
         </LinearLayout>
             <TextView

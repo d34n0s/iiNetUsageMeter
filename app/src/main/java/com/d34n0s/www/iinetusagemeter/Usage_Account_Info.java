@@ -14,14 +14,14 @@ public class Usage_Account_Info {
     public String product;
 
 
-    public Integer getPercentageDaysUsed(){
+    public Double getPercentageDaysUsed(){
         if(days_so_far.matches("0") || days_remaining.matches("0")){
-            return 0;
+            return 0.00;
         }else{
-            Integer dsf = Integer.parseInt(days_so_far);
-            Integer dr = Integer.parseInt(days_remaining);
-            Integer totalDays = dsf+dr;
-            Integer result = dsf / totalDays * 100;
+            Double dsf = Double.parseDouble(days_so_far);
+            Double dr = Double.parseDouble(days_remaining);
+            Double totalDays = dsf+dr-1;
+            Double result = dsf / totalDays * 100.0;
             return result;
         }
 
