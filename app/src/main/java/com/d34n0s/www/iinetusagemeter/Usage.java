@@ -2,12 +2,16 @@ package com.d34n0s.www.iinetusagemeter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +47,13 @@ public class Usage extends Activity implements View.OnClickListener{
     ProgressDialog progressDialog;
     String urlComplete;
 
+
+    //screen dimensions
+    int sWidth;
+    int sHeight;
+    int pixelsPerPercent;
+    int percentageDaysUsed;
+
     //this is the array to hold our class data
     ArrayList<Usage_Traffic> arrayOfWebData = new ArrayList<Usage_Traffic>();
 
@@ -55,6 +66,8 @@ public class Usage extends Activity implements View.OnClickListener{
         setContentView(R.layout.usage);
 
         initialise();
+
+        getScreenDimentions();
 
         urlComplete = getIntent().getExtras().getString("url");
 
@@ -72,6 +85,19 @@ public class Usage extends Activity implements View.OnClickListener{
         tv_usage_daysGone = (TextView) findViewById(R.id.tv_usage_daysGone);
         tv_usage_daysRemaining = (TextView) findViewById(R.id.tv_usage_daysRemaining);
         tv_usage_anniversary = (TextView) findViewById(R.id.tv_usage_anniversary);
+
+    }
+
+    private void getScreenDimentions(){
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        sWidth = size.x;
+        sHeight = size.y;
+
+        if(sWidth != 0){
+            pixelsPerPercent = sWidth / 100;
+        }
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
@@ -140,6 +166,7 @@ public class Usage extends Activity implements View.OnClickListener{
                 acc.anniversary = quota_reset.getString("anniversary");
                 acc.days_remaining = quota_reset.getString("days_remaining");
 
+                percentageDaysUsed = acc.getPercentageDaysUsed() * pixelsPerPercent;
 
                 tv_usage_plan.setText(acc.plan);
                 tv_usage_product.setText(acc.product);
@@ -201,6 +228,11 @@ public class Usage extends Activity implements View.OnClickListener{
         public TextView tv_usage_data = null;
         public TextView tv_usage_allocation = null;
         public TextView tv_usage_remaining = null;
+        //progress bar
+        public ImageView iv_usage_percentDataBar = null;
+        public TextView tv_usage_percentDataUsed = null;
+        public ImageView iv_usage_percentDaysBar = null;
+        public TextView tv_usage_percentDaysUsed = null;
 
 
         ViewHolder(View resultRow){
@@ -208,7 +240,10 @@ public class Usage extends Activity implements View.OnClickListener{
             tv_usage_data = (TextView) resultRow.findViewById(R.id.tv_usage_data);
             tv_usage_allocation = (TextView) resultRow.findViewById(R.id.tv_usage_allocation);
             tv_usage_remaining = (TextView) resultRow.findViewById(R.id.tv_usage_remaining);
-
+            iv_usage_percentDataBar = (ImageView) resultRow.findViewById(R.id.iv_usage_percentDataBar);
+            tv_usage_percentDataUsed = (TextView) resultRow.findViewById(R.id.tv_usage_percentDataUsed);
+            iv_usage_percentDaysBar = (ImageView) resultRow.findViewById(R.id.iv_usage_percentDaysBar);
+            tv_usage_percentDaysUsed = (TextView) resultRow.findViewById(R.id.tv_usage_percentDaysUsed);
 
         }
 
@@ -218,13 +253,24 @@ public class Usage extends Activity implements View.OnClickListener{
             tv_usage_data.setText(String.format("%.2f", ut.getUsedMB()));
             tv_usage_allocation.setText(String.format("%.2f", ut.getAllocationdMB()));
             tv_usage_remaining.setText(String.format("%.2f", ut.getRemaining()));
+            tv_usage_percentDataUsed.setText("Data Used: " + ut.getPercentDataUsed().toString() + "%");
+            tv_usage_percentDaysUsed.setText("Days Used: " + String.valueOf(percentageDaysUsed) + "%");
 
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ut.getPercentDataUsed() * pixelsPerPercent, 5);
+            iv_usage_percentDataBar.setLayoutParams(layoutParams);
+
+            LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(percentageDaysUsed * pixelsPerPercent, 5);
+            iv_usage_percentDaysBar.setLayoutParams(layoutParams1);
+
+            //tv_usage_percentDaysUsed.getLayoutParams().width =(percentageDaysUsed);
 
             return null;
 
 
         }
     }
+
+
     @Override
     public void onClick(View view) {
 

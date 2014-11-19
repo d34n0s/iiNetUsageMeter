@@ -77,4 +77,14 @@ public class Usage_Traffic {
         }
     }
 
+    public Integer getPercentDataUsed(){
+        if(getUsedMB() != 0 && getAllocationdMB() != 0){
+            Double d = (getUsedMB() / getAllocationdMB()) * 100;
+            String s = String.format("%.0f", d);
+            Integer result = Integer.parseInt(s);
+            return result;
+        }
+        return 0;
+    }
+
 }

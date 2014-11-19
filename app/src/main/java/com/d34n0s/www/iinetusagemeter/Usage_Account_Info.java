@@ -13,4 +13,18 @@ public class Usage_Account_Info {
     public String plan;
     public String product;
 
+
+    public Integer getPercentageDaysUsed(){
+        if(days_so_far.matches("0") || days_remaining.matches("0")){
+            return 0;
+        }else{
+            Integer dsf = Integer.parseInt(days_so_far);
+            Integer dr = Integer.parseInt(days_remaining);
+            Integer totalDays = dsf+dr;
+            Integer result = dsf / totalDays * 100;
+            return result;
+        }
+
+    }
+
 }

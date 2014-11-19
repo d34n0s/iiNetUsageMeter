@@ -81,4 +81,79 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:id="@+id/ll_usage_DataUsage"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="20sp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_usage_percentDataBar"
+                    android:layout_centerVertical="true"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/progressbar_data"/>
+        </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_usage_percentDataUsed"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Data Used: %"/>
+
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_usage_DaysUsage"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="20sp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_usage_percentDaysBar"
+                    android:layout_centerVertical="true"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/progressbar_days"/>
+        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_usage_percentDaysUsed"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Days Used: %"/>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        </LinearLayout>
+
 </LinearLayout>
