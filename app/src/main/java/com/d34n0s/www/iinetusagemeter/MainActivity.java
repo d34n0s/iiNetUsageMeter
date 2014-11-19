@@ -182,14 +182,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
             try {
                 JSONObject json = new JSONObject(result);
 
-                tv_rawJson.setText(json.toString());
+                //tv_rawJson.setText(json.toString());
 
                 if (json.has("error")) {
 
                     Toast t = Toast.makeText(MainActivity.this, "Incorrect Username or Password", Toast.LENGTH_LONG);
                     t.show();
 
-                    tv_url.setText(urlComplete);
+                    //tv_url.setText(urlComplete);
 
 
 
@@ -203,11 +203,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
                     serviceToken = service_list.getJSONObject(1).getString("s_token");
 
-                    tv_authToken.setText(authToken);
+                    //tv_authToken.setText(authToken);
 
-                    tv_serviceToken.setText(serviceToken);
+                    //tv_serviceToken.setText(serviceToken);
 
-                    tv_url.setText(urlComplete);
+                    //tv_url.setText(urlComplete);
 
                     goNext(urlBase + "?Usage&_TOKEN=" + authToken + "&_SERVICE=" + serviceToken);
 
@@ -217,7 +217,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                     Toast t = Toast.makeText(MainActivity.this, "Unknown error occurred.", Toast.LENGTH_LONG);
                     t.show();
 
-                    tv_url.setText(urlComplete);
+                    //tv_url.setText(urlComplete);
                 }
 
 
