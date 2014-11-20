@@ -41,10 +41,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     String urlBase = "https://toolbox.iinet.net.au/cgi-bin/api.cgi";
     String urlComplete;
-    String username;
-    String password;
-    String authToken;
-    String serviceToken;
+    String username = "";
+    String password = "";
+    String authToken = "";
+    String serviceToken = "";
 
     public static String prefsFilename = "sharedPrefsDataFile";
     SharedPreferences prefsSP;
@@ -60,7 +60,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         loadSharedPrefs();
 
-        checkConnection();
+        if(checkConnection()){
+            autoLogin();
+        }
 
     }
 
@@ -96,9 +98,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
         et_userName.setText(username);
         password = prefsSP.getString("password", "");
         et_password.setText(password);
-        //authToken = prefsSP.getString("authToken", "authToken - Not Found");
+        authToken = prefsSP.getString("authToken", "");
         //tv_authToken.setText(authToken);
-        //serviceToken = prefsSP.getString("serviceToken", "serviceToken - Not Found");
+        serviceToken = prefsSP.getString("serviceToken", "");
         //tv_serviceToken.setText(serviceToken);
         if(prefsSP.getString("savePassword", "0").matches("1")){
             cb_saveCreds.setChecked(true);
@@ -115,8 +117,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
             editor.putString("userName", userName);
             editor.putString("password", password);
             editor.putString("savePassword", "1");
-            //editor.putString("authToken", authToken);
-            //editor.putString("serviceToken", serviceToken);
+            editor.putString("authToken", authToken);
+            editor.putString("serviceToken", serviceToken);
         }else {
             editor.putString("userName", "");
             editor.putString("password", "");
@@ -149,6 +151,22 @@ public class MainActivity extends Activity implements View.OnClickListener{
             t.show();
 
             return false;
+        }
+    }
+
+    private void autoLogin(){
+        if(authToken.matches("") || serviceToken.matches("")){
+            if(username.matches("") || password.matches("")) {
+                Toast t = Toast.makeText(this, "Enter Username and Password", Toast.LENGTH_LONG);
+                t.show();
+            } else {
+                urlComplete = urlBase + "?_USERNAME=" + username + "&_PASSWORD=" + password;
+
+                new HttpAsyncTask().execute(urlComplete);
+
+            }
+        }else {
+            goNext(urlBase + "?Usage&_TOKEN=" + authToken + "&_SERVICE=" + serviceToken);
         }
     }
 

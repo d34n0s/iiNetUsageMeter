@@ -2,6 +2,8 @@ package com.d34n0s.www.iinetusagemeter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,6 +55,9 @@ public class Usage extends Activity implements View.OnClickListener{
     int sHeight;
     int pixelsPerPercent;
     Double percentageDaysUsed;
+
+    public static String prefsFilename = "sharedPrefsDataFile";
+    SharedPreferences prefsSP;
 
     //this is the array to hold our class data
     ArrayList<Usage_Traffic> arrayOfWebData = new ArrayList<Usage_Traffic>();
@@ -128,6 +133,20 @@ public class Usage extends Activity implements View.OnClickListener{
 
             try {
                 JSONObject json = new JSONObject(result);
+
+                if(json.has("error")){
+                    Toast.makeText(getBaseContext(), "Retrying: " + json.getString("error"), Toast.LENGTH_LONG).show();
+
+                    SharedPreferences.Editor editor = prefsSP.edit();
+
+                    editor.putString("authToken", "");
+                    editor.putString("serviceToken", "");
+                    editor.commit();
+
+                    Intent i = new Intent(Usage.this, MainActivity.class);
+                    startActivity(i);
+
+                }
 
                 JSONObject response = json.getJSONObject("response");
 
@@ -233,6 +252,8 @@ public class Usage extends Activity implements View.OnClickListener{
         public TextView tv_usage_percentDataUsed = null;
         public ImageView iv_usage_percentDaysBar = null;
         public TextView tv_usage_percentDaysUsed = null;
+        public LinearLayout ll_progressBar = null;
+
 
 
         ViewHolder(View resultRow){
@@ -244,6 +265,7 @@ public class Usage extends Activity implements View.OnClickListener{
             tv_usage_percentDataUsed = (TextView) resultRow.findViewById(R.id.tv_usage_percentDataUsed);
             iv_usage_percentDaysBar = (ImageView) resultRow.findViewById(R.id.iv_usage_percentDaysBar);
             tv_usage_percentDaysUsed = (TextView) resultRow.findViewById(R.id.tv_usage_percentDaysUsed);
+            ll_progressBar = (LinearLayout) resultRow.findViewById(R.id.ll_progressBar);
 
         }
 
@@ -256,11 +278,27 @@ public class Usage extends Activity implements View.OnClickListener{
             tv_usage_percentDataUsed.setText("Data Used: " + ut.getPercentDataUsed().toString() + "%");
             tv_usage_percentDaysUsed.setText("Days Used: " + String.format("%.0f", percentageDaysUsed) + "%");
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ut.getPercentDataUsed() * pixelsPerPercent, 40);
+            if(ut.getName().contentEquals("peak") || ut.getName().contentEquals("offpeak")){
+                ll_progressBar.setVisibility(ll_progressBar.VISIBLE);
+            }
+
+            int PercentDataUsed = ut.getPercentDataUsed();
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(PercentDataUsed * pixelsPerPercent, 40);
             iv_usage_percentDataBar.setLayoutParams(layoutParams);
 
             LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams((int) (percentageDaysUsed * pixelsPerPercent), 40);
             iv_usage_percentDaysBar.setLayoutParams(layoutParams1);
+
+            if(PercentDataUsed > percentageDaysUsed - 15){
+                iv_usage_percentDataBar.setImageResource(R.drawable.progressbar_data_warn);
+            }
+            if(PercentDataUsed > percentageDaysUsed){
+                iv_usage_percentDataBar.setImageResource(R.drawable.progressbar_data_danger);
+            }
+
+
+
+
 
             //tv_usage_percentDaysUsed.getLayoutParams().width =(percentageDaysUsed);
 

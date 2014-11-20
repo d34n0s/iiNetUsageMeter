@@ -82,10 +82,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_progressBar"
+        android:visibility="gone"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:weightSum="2">
+
 
         <LinearLayout
             android:id="@+id/ll_usage_DataUsage"
