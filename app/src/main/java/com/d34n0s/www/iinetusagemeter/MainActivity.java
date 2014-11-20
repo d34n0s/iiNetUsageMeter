@@ -98,7 +98,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         et_userName.setText(username);
         password = prefsSP.getString("password", "");
         et_password.setText(password);
-        authToken = prefsSP.getString("authToken"+"1", "");
+        authToken = prefsSP.getString("authToken", "");
         //tv_authToken.setText(authToken);
         serviceToken = prefsSP.getString("serviceToken", "");
         //tv_serviceToken.setText(serviceToken);

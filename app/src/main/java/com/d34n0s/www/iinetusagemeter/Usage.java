@@ -22,7 +22,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.d34n0s.www.iinetusagemeter.HttpURLConnectionClient.getData;
 
@@ -193,11 +197,46 @@ public class Usage extends Activity implements View.OnClickListener{
                 tv_usage_onSince.setText(acc.on_since);
                 tv_usage_daysGone.setText(acc.days_so_far);
                 tv_usage_daysRemaining.setText(acc.days_remaining);
-                tv_usage_anniversary.setText(acc.anniversary);
+
+                Calendar c = Calendar.getInstance();
+
+                SimpleDateFormat df = new SimpleDateFormat("MMM/yyyy");
+                String formattedDate = df.format(c.getTime());
+
+                SimpleDateFormat dffull = new SimpleDateFormat("dd/MMM/yyyy");
+                String sCurrentDate = dffull.format(c.getTime());
+                Date dCurrentDate = dffull.parse(sCurrentDate);
+
+
+                String AnniversaryDate = acc.anniversary + "/" + formattedDate;
+
+
+                Date convertedDate = null;
+                try {
+                    SimpleDateFormat newdf = new SimpleDateFormat("dd/MMM/yyyy");
+                    convertedDate = newdf.parse(AnniversaryDate);
+                    AnniversaryDate = String.valueOf(convertedDate);
+                    if(convertedDate.before(dCurrentDate) ){
+                        Calendar c1 = Calendar.getInstance();
+                            c1.setTime(convertedDate);
+                        c1.add(Calendar.MONTH, 1);  // number of days to add, can also use Calendar.DAY_OF_MONTH in place of Calendar.DATE
+                        String output = newdf.format(c1.getTime());
+                        convertedDate = newdf.parse(output);
+                        AnniversaryDate = String.valueOf(convertedDate);
+                    }
+
+
+                } catch (ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                tv_usage_anniversary.setText(AnniversaryDate);
                 //tv_usage_url.setText(urlComplete);
 
 
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
 
