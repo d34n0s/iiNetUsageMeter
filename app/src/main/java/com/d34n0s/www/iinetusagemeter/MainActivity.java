@@ -98,7 +98,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         et_userName.setText(username);
         password = prefsSP.getString("password", "");
         et_password.setText(password);
-        authToken = prefsSP.getString("authToken", "");
+        authToken = prefsSP.getString("authToken"+"1", "");
         //tv_authToken.setText(authToken);
         serviceToken = prefsSP.getString("serviceToken", "");
         //tv_serviceToken.setText(serviceToken);
@@ -219,7 +219,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
                     JSONArray service_list = response.getJSONArray("service_list");
 
-                    serviceToken = service_list.getJSONObject(1).getString("s_token");
+                    String sUser = et_userName.getText().toString();
+                    String sub = (sUser.substring(0,sUser.indexOf("@")));
+                    int i = 0;
+                    while (i < service_list.length()) {
+
+                        JSONObject json_data = service_list.getJSONObject(i);
+
+                        if(json_data.getString("pk_v").matches(sub)){
+                            serviceToken = json_data.getString("s_token");
+                        }
+                        i++;
+                    }
+
 
                     //tv_authToken.setText(authToken);
 
@@ -246,8 +258,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             writeSharedPrefs();
 
         }
-        //String sub = et_userName.getText().toString();
-        //tv_status.setText(sub.substring(0,sub.indexOf("@")));
+
 
     }
 
