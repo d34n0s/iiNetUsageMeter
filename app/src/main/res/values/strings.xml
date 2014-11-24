@@ -3,6 +3,6 @@
 
     <string name="app_name">iiNet Usage Meter</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="menu_logout">Logout</string>
 
 </resources>

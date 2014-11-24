@@ -283,7 +283,17 @@ public class MainActivity extends Activity implements View.OnClickListener{
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_logout) {
+            prefsSP = getSharedPreferences(prefsFilename, 0);
+            SharedPreferences.Editor editor = prefsSP.edit();
+                editor.putString("userName", "");
+                editor.putString("password", "");
+                editor.putString("savePassword", "0");
+                editor.putString("authToken", "");
+                editor.putString("serviceToken", "");
+            editor.commit();
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
             return true;
         }
 

@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -227,7 +229,7 @@ public class Usage extends Activity implements View.OnClickListener{
 
 
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 }
                 tv_usage_anniversary.setText(AnniversaryDate);
@@ -347,7 +349,37 @@ public class Usage extends Activity implements View.OnClickListener{
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_logout) {
+            prefsSP = getSharedPreferences(prefsFilename, 0);
+            SharedPreferences.Editor editor = prefsSP.edit();
+            editor.putString("userName", "");
+            editor.putString("password", "");
+            editor.putString("savePassword", "0");
+            editor.putString("authToken", "");
+            editor.putString("serviceToken", "");
+            editor.commit();
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public void onClick(View view) {
 
